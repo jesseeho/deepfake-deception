@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detecting Deception, Not Deepfakes</title>
+<meta name="description" content="Detecting Deception, Not Deepfakes: Why Media Forensics Needs Social Theories. A position paper proposing a three-layer interaction-grounded framework for deepfake detection drawing on Speech Act Theory, Grice's Cooperative Principle, and Cialdini's Principles of Influence.">
+
+<meta property="og:title" content="Detecting Deception, Not Deepfakes">
+<meta property="og:description" content="A position paper arguing that deepfake detection is a deception problem, not a synthesis detection problem.">
+<meta property="og:type" content="article">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300..700;1,300..700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root {
+  --bg: #ffffff;
+  --bg-soft: #f7f7f5;
+  --bg-section: #fafaf8;
+  --text: #1a1a1a;
+  --text-soft: #424242;
+  --text-mute: #6b6b6b;
+  --border: #e5e5e2;
+  --border-soft: #efefec;
+  --accent: #8b1a1a;
+  --accent-soft: #c75a52;
+  --link: #8b1a1a;
+  --serif: 'Crimson Pro', 'Times New Roman', serif;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+  --maxw: 920px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s ease;
+}
+
+a:hover { border-bottom-color: var(--link); }
+
+/* HERO */
+.hero {
+  padding: 5rem 1.5rem 3rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.hero .container { max-width: var(--maxw); margin: 0 auto; }
+
+.hero h1 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.4rem;
+  color: var(--text);
+}
+
+.hero h1 .em { font-style: italic; font-weight: 500; }
+
+.hero .subtitle {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+  color: var(--text-soft);
+  margin-bottom: 2.5rem;
+  line-height: 1.4;
+}
+
+.authors {
+  font-family: var(--sans);
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  line-height: 1.7;
+}
+
+.authors .author-name { display: inline-block; margin: 0 0.4rem; }
+
+.authors sup {
+  font-size: 0.7rem;
+  color: var(--accent);
+  font-weight: 500;
+  margin-left: 1px;
+}
+
+.affiliations {
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  color: var(--text-mute);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.affiliations sup {
+  font-size: 0.7rem;
+  color: var(--accent);
+  font-weight: 500;
+  margin-right: 2px;
+}
+
+.affiliations .sep { display: inline-block; margin: 0 0.5rem; color: var(--border); }
+
+.contact {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--text-mute);
+  margin-bottom: 2.5rem;
+}
+
+.contact a { color: var(--text-mute); }
+.contact a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.65rem 1.3rem;
+  background: var(--text);
+  color: var(--bg);
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  font-weight: 500;
+  border: 1px solid var(--text);
+  border-radius: 999px;
+  text-decoration: none;
+  transition: all 0.18s ease;
+}
+
+.btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+  transform: translateY(-1px);
+  border-bottom-color: var(--accent);
+}
+
+.btn i { font-size: 0.95rem; }
+
+/* TEASER */
+.teaser {
+  padding: 3rem 1.5rem 2rem;
+  background: var(--bg-section);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.teaser .container { max-width: var(--maxw); margin: 0 auto; }
+
+.teaser-figure {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.teaser-figure img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+
+.teaser-figure .placeholder {
+  color: var(--text-mute);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+}
+
+.teaser-figure .placeholder code {
+  background: var(--bg-soft);
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+
+.figure-caption {
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--text-soft);
+  text-align: left;
+  padding: 0 0.5rem;
+}
+
+.figure-caption strong { font-weight: 600; color: var(--text); }
+
+/* SECTIONS */
+section {
+  padding: 3.5rem 1.5rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+section:nth-child(even) { background: var(--bg-section); }
+
+section .container { max-width: var(--maxw); margin: 0 auto; }
+
+section h2 {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.95rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.5rem;
+  color: var(--text);
+  position: relative;
+  padding-bottom: 0.6rem;
+}
+
+section h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 36px;
+  height: 2px;
+  background: var(--accent);
+}
+
+section h3 {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.3rem;
+  letter-spacing: -0.005em;
+  margin: 1.75rem 0 0.6rem;
+  color: var(--text);
+}
+
+section p {
+  font-family: var(--serif);
+  font-size: 1.12rem;
+  line-height: 1.65;
+  color: var(--text);
+  margin-bottom: 1.1rem;
+}
+
+section p.sans {
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+section ul, section ol {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  line-height: 1.65;
+  color: var(--text);
+  margin: 1rem 0 1.2rem 1.5rem;
+}
+
+section ul li, section ol li { margin-bottom: 0.5rem; }
+section ul li::marker { color: var(--accent); }
+
+em.term { font-style: italic; color: var(--text); font-weight: 500; }
+
+strong.tag {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-style: normal;
+  color: var(--accent);
+}
+
+.position-callout {
+  background: var(--bg);
+  border-left: 3px solid var(--accent);
+  padding: 1.5rem 1.75rem;
+  margin: 1.5rem 0 2rem;
+  font-family: var(--serif);
+  font-size: 1.12rem;
+  line-height: 1.6;
+  font-style: italic;
+  color: var(--text);
+}
+
+.position-callout .label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.7rem;
+  font-style: normal;
+}
+
+/* PREMISES */
+.premise-table { margin: 1.5rem 0; border-top: 1px solid var(--border); }
+
+.premise-row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 1.5rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--border-soft);
+  align-items: start;
+}
+
+.premise-row .pid {
+  font-family: var(--mono);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent);
+  padding-top: 0.1rem;
+}
+
+.premise-row .pid .yrs {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--text-mute);
+  font-weight: 400;
+  margin-top: 0.2rem;
+  letter-spacing: 0.02em;
+}
+
+.premise-row .body h4 {
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: var(--text);
+}
+
+.premise-row .body p {
+  font-family: var(--serif);
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: var(--text-soft);
+  margin: 0;
+}
+
+.premise-row .body .erodes {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  color: var(--text-mute);
+  margin-top: 0.4rem;
+  font-style: italic;
+}
+
+.premise-row .body .erodes strong {
+  font-style: normal;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .premise-row { grid-template-columns: 1fr; gap: 0.4rem; }
+}
+
+/* LAYER CARDS */
+.layer-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1rem;
+}
+
+.layer-card .layer-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.layer-card .ln {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+
+.layer-card h4 {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.layer-card .theory {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--text-mute);
+}
+
+.layer-card p {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+  color: var(--text-soft);
+}
+
+.layer-card .example {
+  background: var(--bg-section);
+  border-left: 2px solid var(--accent);
+  padding: 0.9rem 1.1rem;
+  margin-top: 1rem;
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.55;
+}
+
+.layer-card .example::before {
+  content: 'Example. ';
+  font-weight: 600;
+  font-style: normal;
+  color: var(--accent);
+}
+
+/* BIBTEX */
+.bibtex-block {
+  background: #1a1a1a;
+  color: #e8e8e8;
+  padding: 1.5rem 1.75rem;
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  line-height: 1.7;
+  overflow-x: auto;
+  white-space: pre;
+  position: relative;
+  margin-top: 1rem;
+}
+
+.bibtex-block .field { color: #f0a868; }
+.bibtex-block .key { color: #e98989; }
+.bibtex-block .val { color: #e8e8e8; }
+
+.copy-btn {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  background: transparent;
+  border: 1px solid #555;
+  color: #ccc;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.7rem;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.copy-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+/* FOOTER */
+.acknowledgements {
+  background: var(--bg-section);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.acknowledgements .container { max-width: var(--maxw); margin: 0 auto; }
+
+.acknowledgements p {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--text-mute);
+  line-height: 1.55;
+}
+
+footer {
+  padding: 2rem 1.5rem;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-mute);
+  letter-spacing: 0.04em;
+}
+
+footer .links { margin-top: 0.6rem; }
+footer .links a { color: var(--text-mute); margin: 0 0.5rem; }
+footer .links a:hover { color: var(--accent); }
+
+@media (max-width: 640px) {
+  .hero { padding: 3rem 1rem 2rem; }
+  section { padding: 2.5rem 1rem; }
+  .actions { gap: 0.5rem; }
+  .btn { padding: 0.55rem 1rem; font-size: 0.85rem; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container">
+    <h1>Detecting <span class="em">Deception,</span> Not Deepfakes</h1>
+    <p class="subtitle">Why Media Forensics Needs Social Theories</p>
+
+    <div class="authors">
+      <span class="author-name">Jessee Ho<sup>1</sup></span><span style="color: var(--border)">·</span>
+      <span class="author-name">Shweta Khushu<sup>1</sup></span><span style="color: var(--border)">·</span>
+      <span class="author-name">Shaina Raza<sup>1,2</sup></span>
+    </div>
+
+    <div class="affiliations">
+      <sup>1</sup>Vector Institute for Artificial Intelligence
+      <span class="sep">·</span>
+      <sup>2</sup>Toronto Metropolitan University
+    </div>
+
+    <div class="contact">
+      <a href="mailto:jessee.ho@vectorinstitute.ai">jessee.ho@vectorinstitute.ai</a>
+      &nbsp;·&nbsp;
+      <a href="mailto:shweta.khushu@gmail.com">shweta.khushu@gmail.com</a>
+      &nbsp;·&nbsp;
+      <a href="mailto:shaina.raza@torontomu.ca">shaina.raza@torontomu.ca</a>
+    </div>
+
+    <div class="actions">
+      <a href="#" class="btn"><i class="fas fa-file-pdf"></i> Paper</a>
+      <a href="#" class="btn"><i class="fas fa-archive"></i> arXiv</a>
+      <a href="#" class="btn"><i class="fab fa-github"></i> Code</a>
+      <a href="#bibtex" class="btn"><i class="fas fa-quote-right"></i> BibTeX</a>
+    </div>
+  </div>
+</header>
+
+<!-- TEASER -->
+<section class="teaser" style="border-bottom: 1px solid var(--border-soft);">
+  <div class="container">
+    <div class="teaser-figure">
+      <!-- Replace placeholder div below with: <img src="figures/figure1_interrogation.png" alt="The interrogation analogy"> -->
+      <div class="placeholder">
+        <i class="fas fa-image" style="font-size: 1.5rem; opacity: 0.4; margin-bottom: 0.5rem;"></i><br>
+        Place Figure 1 here: <code>figures/figure1_interrogation.png</code><br>
+        <span style="font-size: 0.78rem;">(replace this placeholder div with an <code>&lt;img&gt;</code> tag)</span>
+      </div>
+    </div>
+    <p class="figure-caption">
+      <strong>Figure 1.</strong> The interrogation analogy. Traditional detection focuses on surface-level artifacts. An interrogation-based approach evaluates speech act validity, interaction coherence, and manipulative intent &mdash; shifting detection from perceptual analysis to communicative structure and behaviour.
+    </p>
+  </div>
+</section>
+
+<!-- ABSTRACT -->
+<section id="abstract">
+  <div class="container">
+    <h2>Abstract</h2>
+    <p>
+      For nearly a decade, deepfake detection has been treated as a classification task: given an audio or video clip, decide whether it is real or synthetic. Top detectors often report AUCs above 0.95 on standard benchmarks, but their accuracy drops sharply on content from newer or unseen generators. We take the position that better classifiers alone will not solve this problem.
+    </p>
+    <p>
+      Detection is not only a media-forensics task; it is also a question of how deception works in communication. We identify five assumptions that artifact-based detection relies on and show that all five are breaking down at once as generative models improve, creating what we call the <em class="term">Generalization Illusion</em>. To address this, we propose adding a second layer of analysis focused on communication itself, drawing on three well-established ideas from philosophy of language and social psychology: <em class="term">Speech Act Theory</em>, <em class="term">Grice's Cooperative Principle</em>, and <em class="term">Cialdini's Principles of Influence</em>. These let us examine signals at three levels: the utterance, the conversation, and the listener's response. The result is a unified framework that works alongside existing forensic methods.
+    </p>
+  </div>
+</section>
+
+<!-- POSITION -->
+<section id="position">
+  <div class="container">
+    <h2>Position Statement</h2>
+    <div class="position-callout">
+      <span class="label">Our Position</span>
+      Current deepfake detectors focus on identifying traces left by specific generative tools, rather than detecting synthesis itself. As these tools evolve, their traces fade, and detection performance declines. We argue that the field needs a new focus: shifting from analyzing the media artifact to examining the communicative interaction, and from measuring synthetic realism to understanding operational deception.
+    </div>
+    <p>
+      Current detectors ask: <em>"was this generated by a machine?"</em> We argue the right question is: <em>"is this being used to deceive someone?"</em> These are not the same question, and optimizing for the first does not answer the second. In this paper, we take the position that <strong>deepfake detection is a deception problem, not a synthesis detection problem</strong>.
+    </p>
+  </div>
+</section>
+
+<!-- DIAGNOSIS -->
+<section id="diagnosis">
+  <div class="container">
+    <h2>Diagnosis: The Generalization Illusion</h2>
+
+    <p>
+      Existing deepfake detectors rest on a set of forensic premises that were reasonable when introduced but are now eroding due to advances in generative modelling. We identify five such premises (P1&ndash;P5). They do not fail independently &mdash; they fail jointly, producing a systematic overestimation of real-world capability from static benchmarks that we term the <em class="term">Generalization Illusion</em>.
+    </p>
+
+    <div class="premise-table">
+
+      <div class="premise-row">
+        <div class="pid">P1<span class="yrs">2017&ndash;2022</span></div>
+        <div class="body">
+          <h4>Spatial artifact persistence</h4>
+          <p>Face manipulation introduces detectable irregularities at blending boundaries, in warping fields, or in local textures. CNN-based detectors such as XceptionNet, Face X-ray, and LAA-Net operationalize this by learning to localize boundary artifacts.</p>
+          <p class="erodes"><strong>Eroded by:</strong> end-to-end diffusion-based generators that synthesize entire frames without a discrete blending step.</p>
+        </div>
+      </div>
+
+      <div class="premise-row">
+        <div class="pid">P2<span class="yrs">2019&ndash;2022</span></div>
+        <div class="body">
+          <h4>Frequency-domain signatures</h4>
+          <p>Generative models leave characteristic spectral fingerprints &mdash; checkerboard artifacts from transposed convolutions, anomalous frequency-energy distributions &mdash; that distinguish them from natural images. Targeted by F3-Net, FreqNet, FE-CLIP.</p>
+          <p class="erodes"><strong>Eroded by:</strong> hybrid pipelines, frequency-domain post-processing, and signature mismatch between newer generators and older detectors.</p>
+        </div>
+      </div>
+
+      <div class="premise-row">
+        <div class="pid">P3<span class="yrs">2019&ndash;2023</span></div>
+        <div class="body">
+          <h4>Temporal signals</h4>
+          <p>Frame-by-frame generation introduces flicker, identity drift, and unnatural micro-movements detectable by modeling temporal dynamics. Methods include FTCN, AltFreezing, MSVT, and Temporal Coherence Networks.</p>
+          <p class="erodes"><strong>Eroded by:</strong> temporally-aware generators, motion stabilization, and advances in frame consistency and interpolation.</p>
+        </div>
+      </div>
+
+      <div class="premise-row">
+        <div class="pid">P4<span class="yrs">2018&ndash;2023</span></div>
+        <div class="body">
+          <h4>Biological signal violation</h4>
+          <p>Synthetic faces fail to reproduce subtle physiological signals: blink patterns, gaze stability, micro-expression timing, and rPPG-derived heart-rate variation. Operationalized by FakeCatcher, DeepRhythm.</p>
+          <p class="erodes"><strong>Eroded by:</strong> high-resolution and temporally consistent generators that can preserve or imitate even rPPG signals.</p>
+        </div>
+      </div>
+
+      <div class="premise-row">
+        <div class="pid">P5<span class="yrs">2018&ndash;present</span></div>
+        <div class="body">
+          <h4>Signal survival under compression and distribution</h4>
+          <p>The signals detectors rely on &mdash; spatial, spectral, temporal, biological &mdash; survive lossy real-world distribution channels: video compression, social-media re-encoding, screen capture, conferencing codecs.</p>
+          <p class="erodes"><strong>Weakly validated:</strong> P5 is a meta-premise that gates the observability of every other signal at deployment. Most detectors are evaluated on minimally compressed lab data.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <h3>How deception is actually caught</h3>
+    <p>
+      The record of real-world deepfake attacks reveals a consistent pattern. When attacks are stopped, it is because a human operator detected a contextual anomaly; when they succeed, it is because no such verification occurred. In neither case does automated media forensics play a meaningful role.
+    </p>
+    <ul>
+      <li><strong class="tag">UK Energy (2019).</strong> &euro;220,000 lost to a voice-cloned CEO. Discovered only after a follow-up call raised contextual suspicion about the request &mdash; not the audio signal.</li>
+      <li><strong class="tag">Arup (2024).</strong> $25.5M lost to a multi-person deepfake video conference. Discovered weeks later through financial reconciliation &mdash; not by any automated detection system.</li>
+      <li><strong class="tag">Ferrari (2024).</strong> Attempted voice-clone of the CEO. Stopped when the executive asked a personal question only the real CEO could answer.</li>
+    </ul>
+    <p>
+      In each case, detection relied on contextual signals outside the current paradigm. Current detection methods do not capture these signals because they were not designed to.
+    </p>
+  </div>
+</section>
+
+<!-- METHOD -->
+<section id="method">
+  <div class="container">
+    <h2>A Three-Layer Framework</h2>
+
+    <p>
+      We propose <em class="term">interaction forensics</em>: a complementary layer that targets behavioural signals beyond the reach of artifact-based analysis, operating in parallel with existing detection pipelines. The framework decomposes an interaction into three analytical layers, drawing on three theories from linguistics and social psychology.
+    </p>
+
+    <div class="layer-card">
+      <div class="layer-header">
+        <span class="ln">L1 / Utterance</span>
+        <h4>Illocutionary analysis</h4>
+        <span class="theory">&mdash; Searle's Speech Act Theory</span>
+      </div>
+      <p>
+        Analyzes individual utterances to ask: <em>what is the speaker doing, and does it fit their role and context?</em> Identity claims are treated as checkable assertions, where "checkable" is operationalized through out-of-band verification &mdash; callbacks, prior shared context, challenge-response &mdash; rather than real-time media analysis. Signals include vague answers under verification pressure, unsolicited self-identification, and resistance to verification.
+      </p>
+      <div class="example">
+        A deepfake video of a CEO saying "transfer $200,000 immediately" is a directive whose validity conditions &mdash; real authority, appropriate channel, sincerity &mdash; are systematically unsatisfied by design, despite high visual realism.
+      </div>
+    </div>
+
+    <div class="layer-card">
+      <div class="layer-header">
+        <span class="ln">L2 / Conversation</span>
+        <h4>Conversational norm analysis</h4>
+        <span class="theory">&mdash; Grice's Cooperative Principle</span>
+      </div>
+      <p>
+        Evaluates how well a conversation follows basic communication norms across its full flow, drawing on the four maxims: <em>Quantity</em> (right amount of information), <em>Quality</em> (truthful), <em>Relation</em> (relevant), <em>Manner</em> (clear and natural). Critically, this layer distinguishes deception from legitimate urgency: genuine urgent requests remain contextually coherent and admit verification; deceptive ones suppress verification and disrupt conversational norms.
+      </p>
+      <div class="example">
+        A deepfake "manager" requesting urgent payment may falsely claim an identity, provide unnecessary detail, and insert a financial request into routine communication. The message seems normal &mdash; but it breaks the cooperative rules it appears to follow.
+      </div>
+    </div>
+
+    <div class="layer-card">
+      <div class="layer-header">
+        <span class="ln">L3 / Recipient</span>
+        <h4>Coercion pattern analysis</h4>
+        <span class="theory">&mdash; Cialdini's Principles of Influence</span>
+      </div>
+      <p>
+        Examines how the communication attempts to influence the target. The key signal is not <em>whether</em> influence is present, but <em>how intensely</em> it is applied and <em>how many tactics co-occur</em>. Deepfake fraud typically combines authority, scarcity, social proof, reciprocity, commitment, liking, and unity within a single interaction at atypical density.
+      </p>
+      <div class="example">
+        "This is the CEO. Transfer the funds immediately. The finance team is aware, and it must be done within the hour" combines authority + social proof + scarcity in one utterance. Each cue benign in isolation; their combined density signals manipulation.
+      </div>
+    </div>
+
+    <h3>Cross-layer integration</h3>
+    <p>
+      The three layers are complementary lenses, and their joint signal is more informative than any layer in isolation. Each layer produces an independent deception score; an aggregate is computed as a weighted combination, with both an aggregate threshold and per-layer override thresholds to avoid the vulnerability of strict-agreement requirements. Weights and thresholds are deployment-dependent and form part of the calibration agenda.
+    </p>
+  </div>
+</section>
+
+<!-- EVALUATION -->
+<section id="evaluation">
+  <div class="container">
+    <h2>Evaluation: Beyond AUC</h2>
+
+    <p>
+      The framework cannot be evaluated using the benchmarks that dominate deepfake detection research. Existing benchmarks test classifiers on isolated clips and report binary accuracy or AUC. We propose evaluating defences on complete interaction scenarios using two complementary metrics:
+    </p>
+
+    <h3>Attack Prevention Rate (APR)</h3>
+    <p class="sans">
+      The fraction of attack scenarios in which the defence intervenes <em>before</em> the target executes the requested harmful action. Correct decisions issued after compliance contribute nothing to APR.
+    </p>
+
+    <h3>Benign Pass-Through Rate (BPR)</h3>
+    <p class="sans">
+      The fraction of legitimate interactions that proceed without unwarranted intervention. APR alone is gameable &mdash; a defence that intervenes on every interaction trivially achieves APR = 1 &mdash; so we pair it with BPR. A useful defence achieves both, with their trade-off made explicit on the APR&ndash;BPR plane.
+    </p>
+
+    <h3>Scenario design</h3>
+    <p class="sans">
+      Scenarios should be characterized along five dimensions: attack type (CEO fraud, invoice redirection, phishing escalation), victim persona (finance, HR), modality and channel (audio, video, synchronous or asynchronous), interaction length (single or multi-step), and compliance setup (scripted decisions, simulated agents, or human studies). A useful benchmark may include 10<sup>2</sup>&ndash;10<sup>3</sup> scenarios across ~10 attack types, ~5 personas, and 2&ndash;3 modalities, with matched benign cases for BPR.
+    </p>
+  </div>
+</section>
+
+<!-- AGENDA -->
+<section id="agenda">
+  <div class="container">
+    <h2>Research Agenda</h2>
+    <p>
+      Our framework is conceptual and defines a research direction. Making it practical requires solving four key problems, each challenging but feasible with existing work.
+    </p>
+    <ol>
+      <li><strong>Deception benchmarks.</strong> Datasets annotated not only for synthetic/real labels, but for deceptive intent, influence tactics, validity-condition violations, and communicative context.</li>
+      <li><strong>Speech-act classification for multimedia.</strong> Extending speech-act classification to video calls, voice messages, and multimodal social posts; LLM-based methods reach near-human performance on text, but real-time inference and organizational context remain open.</li>
+      <li><strong>Influence-tactic detection at scale.</strong> Detectors for authority exploitation, urgency framing, social-proof fabrication, and reciprocity manipulation in real-time communication.</li>
+      <li><strong>Conversational anomaly detection.</strong> Discourse models that detect systematic violations of cooperative communication norms &mdash; pragmatic consistency, not just surface coherence.</li>
+    </ol>
+    <p>
+      Two deployment constraints warrant acknowledgement. Real-time inference across three layers may exceed latency budgets, suggesting a staged pipeline. Continuous transcription raises privacy concerns, requiring consent, on-device processing, and data minimization. Across both, humans remain the final line of defence: these systems should support, not replace, their judgment.
+    </p>
+  </div>
+</section>
+
+<!-- BIBTEX -->
+<section id="bibtex">
+  <div class="container">
+    <h2>BibTeX</h2>
+    <p>
+      If you find this work useful, please cite it as:
+    </p>
+    <div class="bibtex-block" id="bib">
+<button class="copy-btn" onclick="copyBib()">Copy</button>
+<span class="field">@article</span>{<span class="key">ho2026detecting</span>,
+  <span class="field">title</span>   = {<span class="val">Detecting Deception, Not Deepfakes: Why Media Forensics Needs Social Theories</span>},
+  <span class="field">author</span>  = {<span class="val">Ho, Jessee and Khushu, Shweta and Raza, Shaina</span>},
+  <span class="field">year</span>    = {<span class="val">2026</span>},
+  <span class="field">note</span>    = {<span class="val">Position paper</span>}
+}</div>
+  </div>
+</section>
+
+<!-- ACKNOWLEDGEMENTS -->
+<div class="acknowledgements">
+  <div class="container">
+    <p>
+      This work was conducted at the Vector Institute for Artificial Intelligence in collaboration with Toronto Metropolitan University.
+    </p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>&copy; 2026 &middot; Detecting Deception, Not Deepfakes</div>
+  <div class="links">
+    <a href="mailto:jessee.ho@vectorinstitute.ai">Contact</a>
+    <a href="#abstract">Abstract</a>
+    <a href="#method">Method</a>
+    <a href="#bibtex">BibTeX</a>
+  </div>
+</footer>
+
+<script>
+function copyBib() {
+  const block = document.getElementById('bib');
+  const clone = block.cloneNode(true);
+  const btnInClone = clone.querySelector('.copy-btn');
+  if (btnInClone) btnInClone.remove();
+  const text = clone.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    const original = btn.textContent;
+    btn.textContent = 'Copied ✓';
+    setTimeout(() => { btn.textContent = original; }, 1800);
+  });
+}
+</script>
+
+</body>
+</html>
