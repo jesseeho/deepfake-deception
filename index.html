@@ -789,16 +789,17 @@ footer .links a:hover { color: var(--accent); }
   <div class="container">
     <h2>Research Agenda</h2>
     <p>
-      Our framework is conceptual and defines a research direction. Making it practical requires solving four key problems, each challenging but feasible with existing work.
+      Our framework is conceptual: it defines what an interaction-grounded detection system should analyze, not how to build one from current components. The building blocks at each layer are at different maturity levels &mdash; mature for text-based speech-act classification, descriptive for Gricean conversational analysis, and emerging for influence-pattern detection in interactive settings. Making the framework practical requires solving five problems whose foundations exist in adjacent domains but have not been integrated for interactive deepfake deception.
     </p>
     <ol>
-      <li><strong>Deception benchmarks.</strong> Datasets annotated not only for synthetic/real labels, but for deceptive intent, influence tactics, validity-condition violations, and communicative context.</li>
-      <li><strong>Speech-act classification for multimedia.</strong> Extending speech-act classification to video calls, voice messages, and multimodal social posts; LLM-based methods reach near-human performance on text, but real-time inference and organizational context remain open.</li>
-      <li><strong>Influence-tactic detection at scale.</strong> Detectors for authority exploitation, urgency framing, social-proof fabrication, and reciprocity manipulation in real-time communication.</li>
-      <li><strong>Conversational anomaly detection.</strong> Discourse models that detect systematic violations of cooperative communication norms &mdash; pragmatic consistency, not just surface coherence.</li>
+      <li><strong>Deception benchmarks.</strong> Scenario-based benchmarks for deception recognition, with attack and matched-benign cases evaluated against APR, BPR, precision at fixed APR, and intervention latency. Annotated not only for synthetic/real labels, but for deceptive intent, influence tactics, validity-condition violations, and communicative context.</li>
+      <li><strong>Speech-act classification for multimedia.</strong> Extending speech-act classification to video calls, voice messages, and multimodal social posts. LLM-based methods reach near-human performance on text, but no published system performs real-time speech-act verification against speaker-role expectations in interactive video or voice settings.</li>
+      <li><strong>Conversational anomaly detection.</strong> Discourse models that detect systematic violations of cooperative communication norms. The central challenge is distinguishing <em>covert violations</em> intended to mislead from <em>flouting</em> &mdash; the overt, cooperative deviations (sarcasm, politeness, hyperbole) that characterize routine interaction. Without this distinction, systems will produce unworkable false-positive rates.</li>
+      <li><strong>Influence-tactic detection at scale.</strong> Detectors for authority exploitation, urgency framing, social-proof fabrication, and reciprocity manipulation in real-time communication. Prior work in phishing and propaganda detection provides a foundation; calibration for the density and combination patterns observed in deepfake fraud specifically is the open problem.</li>
+      <li><strong>Aggregating layer signals.</strong> The three communication layers produce complementary scores that must be combined into a deception estimate. Lightweight rule-based combinations offer interpretability and low data requirements; learned classifiers &mdash; including LLM-based judges that reason over all three layers jointly &mdash; offer flexibility but require labelled scenarios. The right aggregator is an open methodological question.</li>
     </ol>
     <p>
-      Two deployment constraints warrant acknowledgement. Real-time inference across three layers may exceed latency budgets, suggesting a staged pipeline. Continuous transcription raises privacy concerns, requiring consent, on-device processing, and data minimization. Across both, humans remain the final line of defence: these systems should support, not replace, their judgment.
+      Several deployment constraints warrant acknowledgement. Real-time inference across three layers may exceed latency budgets, suggesting a staged pipeline that begins with lightweight transcript analysis and escalates as needed. Continuous transcription raises privacy concerns, requiring consent, on-device processing, and data minimization. Adversarial adaptation is expected: as attackers learn these signals are monitored, they will adjust their strategies. Humans remain the final line of defence; these systems should support, not replace, their judgment.
     </p>
   </div>
 </section>
@@ -825,7 +826,7 @@ footer .links a:hover { color: var(--accent); }
 <div class="acknowledgements">
   <div class="container">
     <p>
-      This work was conducted at the Vector Institute for Artificial Intelligence in collaboration with Toronto Metropolitan University.
+      This work was conducted at the Vector Institute for Artificial Intelligence.
     </p>
   </div>
 </div>
