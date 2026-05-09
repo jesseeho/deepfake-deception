@@ -758,21 +758,25 @@ footer .links a:hover { color: var(--accent); }
 <section id="evaluation">
   <div class="container">
     <h2>Evaluation: Beyond AUC</h2>
-
     <p>
-      The framework cannot be evaluated using the benchmarks that dominate deepfake detection research. Existing benchmarks test classifiers on isolated clips and report binary accuracy or AUC. We propose evaluating defences on complete interaction scenarios using two complementary metrics:
+      The framework cannot be evaluated using the benchmarks that dominate deepfake detection research. Existing benchmarks test classifiers on isolated clips and report binary accuracy or AUC. AUC remains useful for evaluating media-classification subcomponents, but is insufficient as a primary summary for interaction-grounded deception: it averages over operating points, is invariant to deployment base rates, and reduces latency to a single number. We propose evaluating defences on complete interaction scenarios using four complementary metrics that surface these dimensions explicitly.
     </p>
-
     <h3>Attack Prevention Rate (APR)</h3>
     <p class="sans">
       The fraction of attack scenarios in which the defence intervenes <em>before</em> the target executes the requested harmful action. Correct decisions issued after compliance contribute nothing to APR.
     </p>
-
     <h3>Benign Pass-Through Rate (BPR)</h3>
     <p class="sans">
       The fraction of legitimate interactions that proceed without unwarranted intervention. APR alone is gameable &mdash; a defence that intervenes on every interaction trivially achieves APR = 1 &mdash; so we pair it with BPR. A useful defence achieves both, with their trade-off made explicit on the APR&ndash;BPR plane.
     </p>
-
+    <h3>Precision at fixed APR</h3>
+    <p class="sans">
+      The proportion of flagged interactions that are genuine attacks, evaluated at a chosen attack prevention rate and under deployment-realistic base rates. Because deepfake fraud has very low base rates in deployment, even high BPR can mask operationally untenable false-positive volumes at scale. Precision at fixed APR surfaces this cost directly.
+    </p>
+    <h3>Intervention latency</h3>
+    <p class="sans">
+      The time elapsed from the start of an interaction to the system's intervention decision (block, alert, or escalation). A defence achieving high APR at 60 seconds is qualitatively different from one achieving the same APR at 5 seconds in attacks where compliance occurs within ten seconds. Latency must be reported alongside APR and BPR, not collapsed into them.
+    </p>
     <h3>Scenario design</h3>
     <p class="sans">
       Scenarios should be characterized along five dimensions: attack type (CEO fraud, invoice redirection, phishing escalation), victim persona (finance, HR), modality and channel (audio, video, synchronous or asynchronous), interaction length (single or multi-step), and compliance setup (scripted decisions, simulated agents, or human studies). A useful benchmark may include 10<sup>2</sup>&ndash;10<sup>3</sup> scenarios across ~10 attack types, ~5 personas, and 2&ndash;3 modalities, with matched benign cases for BPR.
