@@ -995,13 +995,13 @@ footer .links a:hover { color: var(--accent); }
   <div class="container">
     <h2>Abstract</h2>
     <p>
-      Deepfake detection is evaluated as a media classification task: given a clip, decide whether it is synthetic. Detectors report high accuracy on curated benchmarks, yet these results are increasingly used to support a different claim, that deployed systems will prevent deepfake-enabled deception in video calls, voice calls, and targeted communications. We argue that this inference requires two validity steps that current benchmarks do not establish.
+      Deepfake detection is typically evaluated as a media-classification task: given a clip, determine whether it is synthetic. Yet benchmark performance is increasingly invoked to support broader claims about preventing deepfake-enabled deception in video calls, voice calls, and targeted communications. We argue that these claims require evidence across two distinct validity gaps.
     </p>
     <p>
-      <em class="term">External validity</em> asks whether synthetic-origin classification transfers across generators, processing pipelines, and transmission channels; we show it rests on five forensic premises, all of which are eroding. <em class="term">Consequential validity</em> asks whether correct classification at deployment is sufficient for prevention. Correct classification alone is insufficient because prevention also depends on context, verification, intervention timing, and recipient response. Even a perfect detector leaves this second gap open.
+      <em class="term">External validity</em> concerns whether detection performance transfers across generators, processing pipelines, and communication channels. <em class="term">Consequential validity</em>, as used here, concerns whether reliable detection translates into timely intervention and prevention of harmful actions. Even perfect synthetic-origin classification does not guarantee prevention when verification is unavailable, intervention occurs too late, or recipients disregard warnings.
     </p>
     <p>
-      We therefore propose evaluating the interaction scenario rather than the isolated clip, define interactive deception through three interaction-level indicators drawn from speech act theory, Gricean pragmatics, and Cialdini's principles of influence, and specify decision-aware metrics: attack prevention rate, benign pass-through rate, precision at fixed prevention under stated base rates, and intervention latency.
+      We therefore propose a scenario-level evaluation framework that integrates media evidence, interaction-level indicators grounded in speech act theory, conversational pragmatics, and influence principles, and operational outcomes. We define candidate measures of attack prevention, benign pass-through, intervention precision under explicit deployment base rates, and intervention timing. Our position is that deployment-oriented evaluation must measure not only whether synthetic media is detected, but whether deception is prevented without unnecessarily disrupting legitimate interactions.
     </p>
   </div>
 </section>
@@ -1051,7 +1051,7 @@ footer .links a:hover { color: var(--accent); }
     </p>
     <ul>
       <li><strong class="tag">Tokyo remote hiring (2026).</strong> A suspected deepfake job applicant withdrew when in-person attendance was required; later checks linked the submitted identity to a real executive. Forensic assessment of the footage happened only after the interaction had ended.</li>
-      <li><strong class="tag">Ferrari (2024).</strong> In an attempted impersonation of the company's CEO, the recipient stopped the attack with a shared-knowledge identity check the impersonator could not answer.</li>
+      <li><strong class="tag">Ferrari (2024).</strong> In an attempted impersonation of a Ferrari executive, the recipient stopped the attack with a shared-knowledge identity check the impersonator could not answer.</li>
     </ul>
     <p>
       In both cases, protection depended on information beyond the audio-visual signal itself.
@@ -1076,14 +1076,17 @@ footer .links a:hover { color: var(--accent); }
 
     <h3>Gap 1 &mdash; External validity: from benchmark to deployment</h3>
     <p>
-      The first step assumes that synthetic-media classification transfers from controlled benchmark data to real-world use. Whether it does depends on whether the forensic signals detectors exploit remain reliable across changes in generators, processing pipelines, and transmission channels. Current detectors rely on five categories of forensic signal, each resting on an assumption we term a <em class="term">forensic premise</em>.
+      The first step assumes that synthetic-media classification transfers from controlled benchmark data to real-world use. Whether it does depends on whether the forensic signals detectors exploit remain reliable across changes in generators, processing pipelines, and transmission channels. Many deepfake detectors exploit forensic signals that depend on assumptions about the generation process and the preservation of those signals after distribution. We organize these assumptions into five representative <em class="term">forensic premises</em>: P1&ndash;P4 describe spatial, frequency-domain, temporal, and biological cues used by different detector families, while P5 concerns the survival of such cues under real-world processing and transmission.
+    </p>
+    <p>
+      These premises are not universal requirements of all detectors, nor does weakening one imply that a modality is no longer useful. Rather, advances in generation and changes in distribution can undermine particular cues learned from earlier datasets. Consequently, evaluation on curated benchmarks cannot, by itself, establish reliability under unseen generators, pipelines, or communication channels.
     </p>
 
     <div class="inline-figure">
       <img src="figures/figure3_forensic_premises.png" alt="Five forensic premises underlying current deepfake detection, and how modern generators and distribution channels erode all five.">
     </div>
     <p class="figure-caption">
-      <strong>Figure 3.</strong> Five forensic premises underlying current deepfake detection. Each assumes that synthetic media introduces detectable signals in a specific domain that persist through real-world distribution. Advances in generative models are eroding P1&ndash;P4, while real-world distribution undermines P5. These failures produce the external validity gap between benchmark and deployment performance.
+      <strong>Figure 3.</strong> Five forensic premises underlying current deepfake detection. Each assumes that synthetic media introduces detectable signals in a specific domain that persist through real-world distribution. Advances in generative models are eroding P1&ndash;P4, while real-world distribution undermines P5. These failures produce the external validity gap between benchmark and deployment performance. Detector lists and erosion details are given in the table below.
     </p>
 
     <div class="premise-table">
@@ -1176,7 +1179,7 @@ footer .links a:hover { color: var(--accent); }
       <img src="figures/figure5_evaluation_components.png" alt="Media evidence plus interaction evidence plus operational outcome combine into deception-aware evaluation.">
     </div>
     <p class="figure-caption">
-      <strong>Figure 5.</strong> Three complementary components of deception-aware evaluation. Media evidence assesses synthetic origin, interaction evidence assesses the surrounding communication, and operational outcomes measure whether the deceptive action is prevented.
+      <strong>Figure 5.</strong> Three complementary components of deception-aware evaluation. Media evidence assesses synthetic origin, interaction evidence assesses the surrounding communication, and operational outcomes measure whether the deceptive action is prevented. Their combination provides evidence for real-world deception prevention.
     </p>
     <p>
       A defence may use any subset of these evidence sources to decide whether and when to intervene. We do not prescribe a particular fusion or decision rule; instead, the framework evaluates the resulting chain from evidence, to intervention, to recipient action and outcome.
@@ -1205,7 +1208,7 @@ footer .links a:hover { color: var(--accent); }
         <span class="theory">&mdash; Grice's Cooperative Principle</span>
       </div>
       <p>
-        Asks whether the interaction is consistent with its prior context and expected communication pattern. Candidate signals include contradictory claims, unusual requests, unexpected topic shifts, or resistance to verification. No single signal is sufficient, since legitimate interactions may also contain unusual requests; whether these signals reliably separate deceptive from legitimate interactions in deepfake settings is an open empirical question.
+        Asks whether the interaction is consistent with its prior context and expected communication pattern. Candidate signals include contradictory claims, unusual requests, unexpected topic shifts, or resistance to verification. No single signal is sufficient, since legitimate interactions may also contain unusual requests; whether these signals reliably separate deceptive from legitimate interactions in deepfake settings is an open empirical question that we identify as a priority for follow-up work.
       </p>
     </div>
 
@@ -1216,9 +1219,13 @@ footer .links a:hover { color: var(--accent); }
         <span class="theory">&mdash; Cialdini's Principles of Influence</span>
       </div>
       <p>
-        Asks whether tactics such as authority, urgency, scarcity, social proof, or reciprocity are used to pressure the recipient toward rapid compliance or discourage verification. No single tactic is inherently deceptive; the diagnostic signal is their <em>co-occurrence and escalation</em> within an interaction.
+        Asks whether tactics such as authority, urgency, scarcity, social proof, or reciprocity are used to pressure the recipient toward rapid compliance or discourage verification. No single tactic is inherently deceptive; the diagnostic signal is their <em>co-occurrence and escalation</em> within an interaction, which prior work associates with manipulative intent. Initial evidence from social engineering and deepfake persuasion research supports the detectability of these patterns.
       </p>
     </div>
+
+    <p>
+      These three indicators capture information that matters when appearance and voice can no longer be trusted alone. Synthetic-origin evidence asks whether the media is likely synthetic, while L1&ndash;L3 add evidence about whether the surrounding interaction is deceptive. Operationalizing them requires observable signals and appropriate reference information: L1 may rely on independent identity or authorization records, while L2 and L3 require annotated interaction-level labels. If human or model judges are used, their reliability should be evaluated.
+    </p>
 
     <h3>Illustrative annotation</h3>
     <p>
@@ -1236,8 +1243,8 @@ footer .links a:hover { color: var(--accent); }
 
     <div class="annot">
       <div class="row"><div class="id">L1</div><p><strong>Act validity.</strong> T1 asserts CEO identity and claims authority to order the transfer. The request to bypass standard approval (T3) and refusal of independent verification (T5) are negative signals: a legitimate CEO would not ordinarily resist confirmation through established channels.</p></div>
-      <div class="row"><div class="id">L2</div><p><strong>Conversational coherence.</strong> T3 introduces a deviation from expected organizational process and a secrecy condition inconsistent with standard financial controls. T5 deflects the verification request rather than addressing it &mdash; the caller's contributions are not responsive to the recipient's reasonable informational needs.</p></div>
-      <div class="row"><div class="id">L3</div><p><strong>Influence patterns.</strong> At least three principles combine: authority (T1), scarcity and urgency (T5), and commitment pressure (T5). Their co-occurrence and escalation across turns is the diagnostic pattern; any single tactic alone is common in legitimate business communication.</p></div>
+      <div class="row"><div class="id">L2</div><p><strong>Conversational coherence.</strong> T3 introduces a deviation from expected organizational process (&ldquo;skipping the normal process&rdquo;) and a secrecy condition (&ldquo;the board wants it done quietly&rdquo;) inconsistent with standard financial controls. T5 deflects the recipient's verification request rather than addressing it. Both represent violations of Gricean cooperation: the caller's contributions are not responsive to the recipient's reasonable informational needs.</p></div>
+      <div class="row"><div class="id">L3</div><p><strong>Influence patterns.</strong> The interaction deploys at least three of Cialdini's principles in combination: authority (CEO identity, T1), scarcity and urgency (&ldquo;no time,&rdquo; &ldquo;deal falls apart,&rdquo; T5), and commitment pressure (&ldquo;I'm counting on you,&rdquo; T5). Their co-occurrence and escalation across turns is the diagnostic pattern; any single tactic alone is common in legitimate business communication.</p></div>
     </div>
     <p>
       Each label is grounded in observable utterance-level features &mdash; identity claims, process deviations, temporal pressure language &mdash; rather than subjective intent judgments. This suggests trained annotators or prompted language models could produce these labels with reasonable agreement, though inter-rater reliability on real deepfake interaction data remains to be established.
@@ -1275,6 +1282,9 @@ footer .links a:hover { color: var(--accent); }
       </table>
     </div>
     <p class="table-caption"><strong>Table 1.</strong> Candidate decision rules are proposals intended to make the indicators testable; their reliability is an empirical question.</p>
+    <p>
+      The indicators can overlap. For example, refusing verification affects all three: the claim remains unverified (L1), the conversation becomes less cooperative (L2), and the refusal may be part of a pressure tactic (L3). We therefore treat L1&ndash;L3 as complementary evidence, not a scoring system, and do not prescribe how a defence combines them; the scenario-level metrics measure the outcome of that combination. Indicators can also conflict: a verified identity (L1) combined with genuine time pressure (L3) may indicate a legitimate urgent request, which is why matched benign scenarios are important. Finally, indicators can be assessed before the interaction ends. Cues for L2 and L3 build up as the conversation unfolds, allowing a defence to act before the decision point, which the intervention latency and decision margin <em>m</em> measure.
+    </p>
   </div>
 </section>
 
@@ -1283,13 +1293,13 @@ footer .links a:hover { color: var(--accent); }
   <div class="container">
     <h2><span class="num">04</span>Evaluating Prevention at the Scenario Level</h2>
     <p>
-      Current benchmarks evaluate a media artifact <em>x</em> with ground truth <em>y</em> &isin; {real, synthetic} and summarize performance with accuracy or AUC. For interactive deception, the unit of evaluation becomes the <em class="term">interaction scenario</em>:
+      If the target construct is interactive deception, clip-level evaluation alone is not enough to support a deployment-level prevention claim. Current benchmarks evaluate a media artifact <em>x</em> with ground truth <em>y</em> &isin; {real, synthetic} and summarize performance with accuracy or AUC. For interactive deception, the unit of evaluation becomes the <em class="term">interaction scenario</em>:
     </p>
     <div class="scenario-def">
       s = ( <span class="v">channel</span>, <span class="v">roles</span>, <span class="v">requested action</span>, <span class="v">decision point</span>, <span class="v">termination condition</span> )
     </div>
     <p>
-      The evaluation question is whether a defence prevents the target action <em>before</em> the relevant decision is made. Each scenario specifies whether it is an attack or benign, the action the attacker is attempting to induce, the decision point at which the recipient could complete it, the permitted interventions (alert, block, verification request, escalation), and the final outcome. An intervention counts as prevention only when the harmful action is not completed before the scenario ends. For benign scenarios, legitimate interactions should proceed without unnecessary intervention &mdash; where &ldquo;unnecessary&rdquo; is defined for the intended deployment setting.
+      The evaluation question is whether a defence prevents the target action <em>before</em> the relevant decision is made. Moving from a clip to an interaction scenario therefore changes both the unit of evaluation and the definition of success. Each scenario specifies whether it is an attack or benign, the action the attacker is attempting to induce, the decision point at which the recipient could complete it, the permitted interventions (alert, block, verification request, escalation), and the final outcome. An intervention counts as prevention only when the harmful action is not completed before the scenario ends. For benign scenarios, legitimate interactions should proceed without unnecessary intervention &mdash; where &ldquo;unnecessary&rdquo; is defined for the intended deployment setting.
     </p>
 
     <h3>Decision-aware metrics</h3>
@@ -1341,7 +1351,10 @@ footer .links a:hover { color: var(--accent); }
       <strong>Table 2.</strong> Hypothetical deployment of 100,000 interactions at fixed APR = 90%. Rows 1, 2, and 4 show the same defence at different base rates; row 3 shows a stronger defence with higher BPR. Precision varies by more than an order of magnitude, while ROC AUC &mdash; independent of base rate &mdash; would remain unchanged for the same underlying detector.
     </p>
     <p>
-      At a 0.1% base rate, a defence with APR = 90% and BPR = 99% prevents 90 attacks but intervenes on 999 benign interactions: roughly eleven false alarms for every attack stopped. Whether that is acceptable depends on the cost of an intervention and the harm it prevents &mdash; a callback before a high-value transfer may justify more false alarms than blocking routine calls. Because base rates are rarely known precisely, precision should be reported across a plausible range and stratified where base rates differ, for example by requested action. Limiting interaction-level checks to high-value decision points raises the effective base rate and improves precision.
+      For simplicity, we assume each prevented attack receives one intervention, while unprevented attacks receive none, and that each benign interaction that does not pass receives one intervention. At a 0.1% base rate, a defence with APR = 90% and BPR = 99% prevents 90 attacks but intervenes on 999 benign interactions: a precision of 8.3%, or roughly eleven false alarms for every attack stopped. The same defence has 47.6% precision at a 1% base rate and 0.9% at 0.01%. ROC AUC would remain the same across these base rates, even though precision changes substantially. A stronger defence with BPR = 99.9% reaches 47.4% precision at the same 0.1% base rate and APR.
+    </p>
+    <p>
+      Whether this level of precision is acceptable depends on the cost of an intervention and the harm it prevents &mdash; a callback before a high-value transfer may justify more false alarms than blocking routine calls. Two caveats apply. First, BPR measured using deliberately difficult benign scenarios may be lower than BPR on typical traffic, so precision should use BPR estimated from, or adjusted to reflect, the deployment's benign traffic. Second, base rates are rarely known precisely, so precision should be reported across a plausible range, as in Table 2, and stratified where base rates differ, for example by requested action. Limiting interaction-level checks to high-value decision points raises the effective base rate and improves precision.
     </p>
 
     <h3>Scenario-based benchmarks</h3>
@@ -1349,12 +1362,17 @@ footer .links a:hover { color: var(--accent); }
       A benchmark should sample scenarios across attack type, recipient role, modality and channel, interaction length, and compliance setup. Each attack scenario should have <strong>matched benign counterparts</strong> with similar surface features &mdash; urgency, authority, financial requests &mdash; so a defence cannot succeed by relying on obvious cues. Benchmark size should be set by the statistical precision required for APR and BPR estimates and by coverage across scenario types, not by the number of synthetic clips. Results should include uncertainty and state the assumed deployment base rate.
     </p>
     <div class="note">
-      <strong>Causal validity.</strong> APR measures whether prevention was observed, not how much of it the defence caused &mdash; a recipient may have refused the request without any intervention. Estimating the defence's added effect requires an appropriate control or comparison condition.
+      <strong>Causal validity.</strong> APR measures whether prevention was observed, not how much of it the defence caused &mdash; a recipient may have refused the request without any intervention. To estimate the incremental effectiveness of a defence, evaluations should include a matched or randomized no-defence control condition and report
+      <div class="formula" style="margin: 0.6rem 0;">&Delta;APR = APR<sub>defence</sub> &minus; APR<sub>control</sub></div>
+      alongside APR. A causal interpretation requires appropriate experimental controls; this prevents naturally unsuccessful attacks from being incorrectly attributed to the defence.
     </div>
+    <p>
+      The goal is not to replace clip-level evaluation but to place it within a broader protocol: media metrics measure whether synthetic origin can be detected, interaction indicators add evidence of deception, and scenario-level metrics evaluate whether the defence actually prevents attacks without disrupting legitimate ones.
+    </p>
 
     <h3>Case study: the Tokyo remote-hiring incident</h3>
     <p>
-      The 2026 Tokyo case illustrates how synthetic-media detection and deception prevention diverge. Media evidence appeared only after the interview; interaction evidence emerged during and after the exchange; and the attack ended before any forensic analysis was conducted. A clip-level benchmark would evaluate whether the recording was correctly classified, but would not capture what actually stopped the deception.
+      The 2026 Tokyo case illustrates how synthetic-media detection and deception prevention diverge. Media evidence appeared only after the interview; interaction evidence emerged during and after the exchange; and the attack ended before any forensic analysis was conducted. A clip-level benchmark would evaluate whether the recording was correctly classified, but would not capture what actually stopped the deception. The interaction evidence here is the applicant's resistance to in-person verification (L2) and a later credential cross-check exposing the false identity (L1).
     </p>
     <div class="table-wrap">
       <table class="data">
@@ -1367,7 +1385,10 @@ footer .links a:hover { color: var(--accent); }
         </tbody>
       </table>
     </div>
-    <p class="table-caption"><strong>Table A.6.</strong> Scenario decomposition for the Tokyo remote-hiring case. Entries distinguish facts on the public record from class-level mappings.</p>
+    <p class="table-caption"><strong>Table A.6.</strong> Scenario decomposition for the Tokyo remote-hiring case. Entries distinguish facts on the public record from class-level mappings; the outcome is left indeterminate where the reporting does not resolve it.</p>
+    <p>
+      The case does not show how often these mechanisms occur. It also provides no interview transcript, so L2 can only be mapped from the reported sequence of events and L3 cannot be assessed. Even with these limits, it illustrates why synthetic-media detection and deception prevention should be evaluated separately.
+    </p>
   </div>
 </section>
 
@@ -1382,13 +1403,13 @@ footer .links a:hover { color: var(--accent); }
       <div class="src">
         <i class="fas fa-newspaper"></i>
         <h4>Reported incidents</h4>
-        <p>Public case reports provide ecological validity but are sparse, lack full transcripts, and cannot be systematically sampled.</p>
+        <p>Public case reports provide ecological validity but are sparse, lack full transcripts, and cannot be systematically sampled. They are useful for framework validation but insufficient for statistical evaluation.</p>
         <p class="role">Ecological grounding</p>
       </div>
       <div class="src">
         <i class="fas fa-user-secret"></i>
         <h4>Scripted red-team role-play</h4>
-        <p>Trained operators run simulated attacks over real channels, controlling scenario dimensions and producing annotatable transcripts. Participant awareness should be reported, as it may shift prevention rates.</p>
+        <p>Trained operators run simulated attacks over real channels, controlling scenario dimensions and producing full transcripts with annotatable decision points. Embedding attack trials within routine interactions improves realism but raises consent requirements. Participant awareness may inflate or deflate prevention rates, so results should report the awareness condition.</p>
         <p class="role">Controlled measurement</p>
       </div>
       <div class="src">
@@ -1398,6 +1419,14 @@ footer .links a:hover { color: var(--accent); }
         <p class="role">Coverage &amp; stress-testing</p>
       </div>
     </div>
+
+    <h3>Evaluation protocol</h3>
+    <p>
+      We recommend evaluating each scenario under four defence configurations: (i) no automated defence, (ii) media-forensics-only detection, (iii) interaction-evidence-only analysis, and (iv) combined media and interaction evidence. Each condition should use comparable attack and benign scenarios with documented recipient roles, evidence availability, decision points, permitted interventions, and termination criteria.
+    </p>
+    <p>
+      Evaluations should record interventions, recipient actions, and final outcomes separately. APR and BPR should be reported with uncertainty estimates, while intervention precision should be calculated under stated deployment base rates. Comparing the combined defence against the media-only baseline would establish whether interaction-level indicators provide incremental operational value.
+    </p>
   </div>
 </section>
 
@@ -1408,7 +1437,7 @@ footer .links a:hover { color: var(--accent); }
     <ul>
       <li><strong>Operational and privacy cost.</strong> Interaction-level analysis adds latency and requires access to transcripts, conversational history, or identity records. L1 can often rely on existing out-of-band checks without retaining content, whereas L2&ndash;L3 require processing conversation content. Deployments must weigh prevention against consent, data minimization, retention, and processing location; where that access is unavailable, only the media-forensic component applies.</li>
       <li><strong>Cross-cultural transfer.</strong> Conversational norms and influence strategies vary across languages, cultures, and organizational settings. The Gricean and Cialdini-based indicators may raise false positives in unfamiliar settings, so BPR should be reported per language and setting, and L1&ndash;L3 should not be assumed to hold beyond where they are validated.</li>
-      <li><strong>Empirical grounding.</strong> The framework is conceptual. We do not show that L1&ndash;L3 can be annotated reliably or that they improve prevention over a media-forensics-only baseline, and we do not release an instantiated benchmark. The next steps are measuring inter-rater agreement between human and LLM judges on red-team transcripts, and comparing APR/BPR against media-only defences.</li>
+      <li><strong>Empirical grounding.</strong> The framework is conceptual. We do not show that L1&ndash;L3 can be annotated reliably or that they improve prevention over a media-forensics-only baseline, and we do not release an instantiated benchmark. The worked annotation shows that labels can be tied to observable features, not that annotators agree on them. The next steps are measuring inter-rater agreement between human and LLM judges on red-team transcripts, and comparing APR/BPR against media-only defences.</li>
     </ul>
   </div>
 </section>
