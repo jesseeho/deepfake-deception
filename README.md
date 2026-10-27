@@ -1,2 +1,2 @@
-# deepfake-deception
-Position paper arguing that deepfake detection should shift from media artifact classification to communication-level deception analysis, integrating Speech Act Theory, Gricean pragmatics, and Cialdini's principles of influence into a unified detection framework.
+# Evaluating Deception, Not Just Deepfakes
+Deepfake detectors are benchmarked on whether a clip is synthetic, but deployment claims are about whether deception is actually prevented. This work identifies two missing validity links, external and consequential, between benchmark accuracy and real-world prevention. It proposes evaluating the full interaction scenario using three interaction-level indicators (act validity, conversational coherence, influence patterns) and decision-aware metrics: attack prevention rate, benign pass-through rate, precision under stated base rates, and intervention latency.
